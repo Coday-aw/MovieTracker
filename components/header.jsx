@@ -1,5 +1,6 @@
 import { SearchIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 function Header({ searchMovie, handleChange }) {
   return (
@@ -9,12 +10,15 @@ function Header({ searchMovie, handleChange }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}
     >
-      <h1 className="font-bold text-xl text-center sm:text-2xl">
-        Movie Tracker
-      </h1>
+      <p className="font-bold text-xl text-center sm:text-2xl">Movie Tracker</p>
+      <div>
+        <Link className="font-bold text-xl hover:text-green-600" href="/">
+          Home
+        </Link>
+      </div>
       <div className="relative sm:w-64">
         <input
-          className=" sm:px-8 sm:py-2 px-8 py-1 rounded-lg"
+          className=" sm:w-full w-32 sm:px-8 sm:py-2 px-8 py-1 rounded-lg"
           type="text"
           placeholder="Search for movies"
           onChange={handleChange}

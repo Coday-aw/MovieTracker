@@ -57,7 +57,7 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center">
       <Header handleChange={handleChange} searchMovie={searchMovie} />
-      <MovieCarousel movies={filteredTopRatedMovies} />
+      <MovieCarousel />
       <MovieCard movies={filteredTrendingMovies} heading="Trending" />
       <MovieCard movies={filteredTopRatedMovies} heading="Top Rated" />
       <MovieCard movies={filteredUpcomingMovies} heading="Upcoming" />

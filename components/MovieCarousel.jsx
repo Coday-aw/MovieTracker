@@ -36,7 +36,7 @@ function MovieCarousel() {
       transition={{ duration: 1, delay: 1 }}
     >
       <Carousel
-        className="max-w-[400px] sm:max-w-[500px] lg:max-w-[700px] md:max-w-[600px]"
+        className="max-w-[500px] sm:max-w-[600px] lg:max-w-[700px] "
         plugins={[
           Autoplay({
             delay: 5000,
@@ -56,7 +56,7 @@ function MovieCarousel() {
                         alt="movie poster"
                         className="w-full h-full object-cover mt-5 relative"
                       />
-                      <p className=" w-full text-center text-black font-bold sm:text-2xl absolute bottom-6 opacity-100 bg-white">
+                      <p className=" w-full text-center text-black font-bold text-2xl absolute bottom-6 opacity-100 bg-white">
                         {topMovie.title}
                       </p>
                     </CardContent>

@@ -1,5 +1,7 @@
 "use client";
 
+import Header from "@/components/header";
+import MovieCard from "@/components/MovieCard";
 import React, { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
@@ -41,6 +43,7 @@ function MovieDetails({ params }) {
 
   return (
     <section>
+      <Header />
       <div className="flex justify-between sm:flex-row flex-col max-w-[1000px] p-5 gap-6 ">
         {movie ? (
           <img
@@ -62,7 +65,7 @@ function MovieDetails({ params }) {
             <FaStar className="text-yellow-500" />
             {movie ? movie.vote_average.toFixed(1) : <Skeleton width={50} />}
           </div>
-          <p>
+          <p className="font-bold text-xl ">
             {movie ? (
               `Release Date: ${movie.release_date}`
             ) : (
