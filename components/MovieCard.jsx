@@ -3,42 +3,90 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Heading from "./Heading";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { NextArrow } from "./NextSlideBtn";
+import { PrevArrow } from "./PrevSlideBtn";
 
 const MovieCard = ({ movies, heading }) => {
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <motion.section
+      className="container mx-auto px-4"
       initial={{ opacity: 0, y: 100 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, delay: 2 }}
     >
       <Heading>{heading}</Heading>
-      <div className="flex flex-wrap justify-center gap-4 max-w-[1000px] mt-4">
+      <Slider {...settings}>
         {movies.map((movie) => {
           const posterUrl = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
           return (
-            <Link
-              href={`/movie/${movie.id}`}
-              className="border w-[200px] h-[300px] rounded-lg relative mb-5 hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer"
+            <div
+              className="px-2 mt-10  hover:scale-105 duration-300 ease-in-out cursor-pointer"
               key={movie.id}
             >
-              <img
-                src={posterUrl}
-                alt={movie.title}
-                className="w-full h-full object-cover rounded-lg "
-              />
-              <div className="absolute bottom-0 bg-slate-900 w-full h-full text-center flex justify-center flex-col opacity-0 hover:opacity-80 text-white transition-opacity duration-300 ease-in-out rounded-lg">
-                <p className="font-bold mt-1">{movie.title}</p>
-                <p>{new Date(movie.release_date).getFullYear()}</p>
-              </div>
-
-              <p className="absolute bottom-[-8px] right-[-8px] bg-yellow-300 p-1 rounded-full font-bold">
-                {movie.vote_average.toFixed(1)}
-              </p>
-            </Link>
+              <Link
+                href={`/movie/${movie.id}`}
+                className="block h-[300px] border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                <img
+                  src={posterUrl}
+                  alt={movie.title}
+                  className="w-full h-full object-cover"
+                />
+              </Link>
+              <p className=" text-center font-bold ">{movie.title}</p>
+            </div>
           );
         })}
-      </div>
+      </Slider>
     </motion.section>
   );
 };
+
 export default MovieCard;

@@ -1,5 +1,3 @@
-"use client";
-import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay";
 import { motion } from "framer-motion";
@@ -10,25 +8,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Heading from "./Heading";
 import Link from "next/link";
 
-function MovieCarousel() {
-  const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-
-  const [topMovies, setTopMovies] = useState([]);
-
-  const getTopMovies = async () => {
-    const url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    console.log(data);
-    setTopMovies(data.results);
-  };
-
-  useEffect(() => {
-    getTopMovies();
-  }, []);
+function MovieCarousel({ movies }) {
   return (
     <motion.section
       initial={{ opacity: 0, y: -100 }}
@@ -44,12 +26,12 @@ function MovieCarousel() {
         ]}
       >
         <CarouselContent>
-          {topMovies.map((topMovie) => {
-            const posterUrl = `https://image.tmdb.org/t/p/w500${topMovie.backdrop_path}`;
+          {movies.map((movie) => {
+            const posterUrl = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
             return (
-              <CarouselItem key={topMovie.id}>
+              <CarouselItem key={movie.id}>
                 <Card className="border-none">
-                  <Link href={`/movie/${topMovie.id}`}>
+                  <Link movies={movies} href={`/movie/${movie.id}`}>
                     <CardContent className="flex justify-center ">
                       <img
                         src={posterUrl}
@@ -57,7 +39,7 @@ function MovieCarousel() {
                         className="w-full h-full object-cover mt-5 relative"
                       />
                       <p className=" w-full text-center text-black font-bold text-2xl absolute bottom-6 opacity-100 bg-white">
-                        {topMovie.title}
+                        {movie.title}
                       </p>
                     </CardContent>
                   </Link>

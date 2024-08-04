@@ -1,7 +1,6 @@
 "use client";
 
 import Header from "@/components/header";
-import MovieCard from "@/components/MovieCard";
 import React, { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
@@ -25,7 +24,7 @@ function MovieDetails({ params }) {
       const url = `https://api.themoviedb.org/3/movie/${params.id}/videos?api_key=${API_KEY}`;
       const res = await fetch(url);
       const data = await res.json();
-      const trailer = data.results.find(
+      const trailer = data.results?.find(
         (video) => video.type === "Trailer" && video.site === "YouTube"
       );
       if (trailer) {
@@ -56,24 +55,26 @@ function MovieDetails({ params }) {
         )}
         <div className="flex-1 sm:mt-5">
           <p className="text-3xl font-bold mb-5">
-            {movie ? movie.title : <Skeleton width={200} />}
+            {movie ? movie.title || movie.name : <Skeleton width={200} />}
           </p>
           <p className="mb-4 font-medium text-xl">
             {movie ? movie.overview : <Skeleton count={3} />}
           </p>
           <div className="flex gap-1 font-bold text-xl justify-start items-center mb-4">
             <FaStar className="text-yellow-500" />
-            {movie ? movie.vote_average.toFixed(1) : <Skeleton width={50} />}
+            {movie ? movie.vote_average?.toFixed(1) : <Skeleton width={50} />}
           </div>
           <p className="font-bold text-xl ">
             {movie ? (
-              `Release Date: ${movie.release_date}`
+              `Release Date: ${movie.release_date || movie.first_air_date}`
             ) : (
               <Skeleton width={150} />
             )}
           </p>
           <div className="mt-6 text-xl font-bold">
-            {movie?.genres.map((genre) => genre.name).join(", ") || (
+            {movie && movie.genres ? (
+              movie.genres.map((genre) => genre.name).join(", ")
+            ) : (
               <Skeleton width={150} />
             )}
           </div>

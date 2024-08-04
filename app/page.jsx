@@ -2,15 +2,14 @@
 
 import { useEffect, useState } from "react";
 import MovieCarousel from "@/components/MovieCarousel";
-import Header from "@/components/header";
 import MovieCard from "@/components/MovieCard";
+import Header from "@/components/header";
 
 export default function Home() {
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [upcomingMovies, setUpcomingMovies] = useState([]);
-  const [searchMovie, setSearchMovie] = useState("");
 
   const getMovies = async (url, setMovies) => {
     try {
@@ -22,22 +21,6 @@ export default function Home() {
       setMovies([]);
     }
   };
-
-  const handleChange = (e) => {
-    setSearchMovie(e.target.value);
-  };
-
-  const filteredTrendingMovies = trendingMovies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchMovie.toLowerCase())
-  );
-
-  const filteredTopRatedMovies = topRatedMovies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchMovie.toLowerCase())
-  );
-
-  const filteredUpcomingMovies = upcomingMovies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchMovie.toLowerCase())
-  );
 
   useEffect(() => {
     getMovies(
@@ -53,14 +36,14 @@ export default function Home() {
       `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`,
       setUpcomingMovies
     );
-  }, []);
+  }, [API_KEY]);
   return (
     <div className="flex flex-col justify-center items-center">
-      <Header handleChange={handleChange} searchMovie={searchMovie} />
-      <MovieCarousel />
-      <MovieCard movies={filteredTrendingMovies} heading="Trending" />
-      <MovieCard movies={filteredTopRatedMovies} heading="Top Rated" />
-      <MovieCard movies={filteredUpcomingMovies} heading="Upcoming" />
+      <Header />
+      <MovieCarousel movies={topRatedMovies} />
+      <MovieCard movies={trendingMovies} heading="Trending" />
+      <MovieCard movies={topRatedMovies} heading="Top Rated" />
+      <MovieCard movies={upcomingMovies} heading="Upcoming" />
     </div>
   );
 }
