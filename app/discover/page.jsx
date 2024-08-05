@@ -17,7 +17,7 @@ function Discover() {
       const trendingUrl = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`;
       const popularUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`;
       const upcomingUrl = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`;
-      const tvUrl = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}`;
+      const tvUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}`;
 
       // Fetch the data from all the URLs
       const [trendingRes, popularRes, upcomingRes, tvRes] = await Promise.all([
@@ -81,7 +81,7 @@ function Discover() {
       >
         <div className="relative sm:w-64 mb-5">
           <input
-            className=" sm:w-full w-32 sm:px-8 sm:py-2 px-8 py-1 rounded-lg border border-gray-300 "
+            className=" sm:w-full w-32 sm:px-8 sm:py-2 px-8 py-1 rounded-lg border-2 "
             type="text"
             placeholder="Search for movies"
             onChange={handleChange}
@@ -89,7 +89,7 @@ function Discover() {
           />
           <SearchIcon
             size={18}
-            className="absolute top-1/2 transform -translate-y-1/2 left-2"
+            className="absolute top-1/2 -translate-y-1/2 left-2"
           />
         </div>
 
@@ -105,7 +105,7 @@ function Discover() {
                 <img
                   src={posterUrl}
                   alt={movie.title}
-                  className="rounded-lg shadow-lg w-[300px] h-[400px] object-cover  "
+                  className="rounded-lg shadow-lg sm:w-[300px] sm:h-[400px] object-cover  "
                 />
                 <div className="flex flex-col justify-center items-center text-lg font-semibold mt-2 absolute bottom-0 right-0 text-center text-white bg-gray-900 w-full h-full opacity-0 hover:opacity-70 rounded-lg ">
                   <p>{movie.title || movie.name}</p>

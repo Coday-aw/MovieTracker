@@ -18,7 +18,7 @@ function MovieCarousel({ movies }) {
       transition={{ duration: 1, delay: 1 }}
     >
       <Carousel
-        className="max-w-[500px] sm:max-w-[600px] lg:max-w-[700px] "
+        className="max-w-[500px] min-w-[390px] sm:max-w-[600px] lg:max-w-[700px] "
         plugins={[
           Autoplay({
             delay: 5000,
@@ -32,13 +32,13 @@ function MovieCarousel({ movies }) {
               <CarouselItem key={movie.id}>
                 <Card className="border-none">
                   <Link movies={movies} href={`/movie/${movie.id}`}>
-                    <CardContent className="flex justify-center ">
+                    <CardContent className="flex justify-center flex-col ">
                       <img
                         src={posterUrl}
                         alt="movie poster"
-                        className="w-full h-full object-cover mt-5 relative"
+                        className="w-full h-full object-cover mt-5 "
                       />
-                      <p className=" w-full text-center text-black font-bold text-2xl absolute bottom-6 opacity-100 bg-white">
+                      <p className=" text-center font-bold text-2xl ">
                         {movie.title}
                       </p>
                     </CardContent>

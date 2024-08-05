@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { motion } from "framer-motion";
 
 function MovieDetails({ params }) {
   const [movie, setMovie] = useState(null);
@@ -12,6 +13,7 @@ function MovieDetails({ params }) {
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
   useEffect(() => {
+    // Fetch movie by ID
     const getMovie = async () => {
       const url = `https://api.themoviedb.org/3/movie/${params.id}?api_key=${API_KEY}`;
       const res = await fetch(url);
@@ -19,7 +21,7 @@ function MovieDetails({ params }) {
       console.log(data);
       setMovie(data);
     };
-
+    // Fetch trailer by ID
     const getTrailer = async () => {
       const url = `https://api.themoviedb.org/3/movie/${params.id}/videos?api_key=${API_KEY}`;
       const res = await fetch(url);
@@ -36,14 +38,21 @@ function MovieDetails({ params }) {
     getTrailer();
   }, [params.id, API_KEY]);
 
-  const posterUrl = movie
-    ? `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`
-    : null;
+  // get the poster
+  const posterUrl = movie ? (
+    `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`
+  ) : (
+    <Skeleton width={300} height={500} />
+  );
 
   return (
-    <section>
+    <motion.section
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1, delay: 1 }}
+    >
       <Header />
-      <div className="flex justify-between sm:flex-row flex-col max-w-[1000px] p-5 gap-6 ">
+      <motion.div className="flex justify-between sm:flex-row flex-col max-w-[1000px] p-5 gap-6 ">
         {movie ? (
           <img
             src={posterUrl}
@@ -79,7 +88,7 @@ function MovieDetails({ params }) {
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {trailerUrl ? (
         <div className=" flex justify-center items-center w-full mt-20 mb-20">
@@ -95,7 +104,7 @@ function MovieDetails({ params }) {
       ) : (
         <Skeleton width={560} height={315} />
       )}
-    </section>
+    </motion.section>
   );
 }
 

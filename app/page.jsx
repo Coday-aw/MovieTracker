@@ -12,6 +12,7 @@ export default function Home() {
   const [upcomingMovies, setUpcomingMovies] = useState([]);
 
   const getMovies = async (url, setMovies) => {
+    // Fetch movies from the API and set the state
     try {
       const res = await fetch(url);
       const data = await res.json();
@@ -23,6 +24,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // Fetch movies when the component mounts
     getMovies(
       `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`,
       setTrendingMovies

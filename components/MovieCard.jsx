@@ -10,6 +10,7 @@ import { NextArrow } from "./NextSlideBtn";
 import { PrevArrow } from "./PrevSlideBtn";
 
 const MovieCard = ({ movies, heading }) => {
+  // Settings for the slider
   const settings = {
     dots: false,
     infinite: true,
@@ -18,6 +19,7 @@ const MovieCard = ({ movies, heading }) => {
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    // Responsive breakpoints
     responsive: [
       {
         breakpoint: 1024,
