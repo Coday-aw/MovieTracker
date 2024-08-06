@@ -102,7 +102,7 @@ function MovieDetails({ params }) {
           ></iframe>
         </div>
       ) : (
-        <Skeleton width={560} height={315} />
+        <Skeleton width={560} height={500} />
       )}
     </motion.section>
   );
