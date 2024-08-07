@@ -64,7 +64,7 @@ function MovieDetails({ params }) {
         )}
         <div className="flex-1 sm:mt-5">
           <p className="text-3xl font-bold mb-5">
-            {movie ? movie.title || movie.name : <Skeleton width={200} />}
+            {movie ? movie.title : <Skeleton width={200} />}
           </p>
           <p className="mb-4 font-medium text-xl">
             {movie ? movie.overview : <Skeleton count={3} />}
@@ -75,7 +75,7 @@ function MovieDetails({ params }) {
           </div>
           <p className="font-bold text-xl ">
             {movie ? (
-              `Release Date: ${movie.release_date || movie.first_air_date}`
+              `Release Date: ${movie.release_date}`
             ) : (
               <Skeleton width={150} />
             )}

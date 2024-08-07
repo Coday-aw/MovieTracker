@@ -8,37 +8,33 @@ import Link from "next/link";
 
 function Discover() {
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-  const [moviesTvShows, setMoviesTvShows] = useState([]);
+  const [movies, setmovies] = useState([]);
   const [searchMovie, setSearchMovie] = useState("");
 
-  const getMoviesTvShows = async () => {
+  const getMovies = async () => {
     try {
       // API URLs
       const trendingUrl = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`;
       const popularUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`;
       const upcomingUrl = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`;
-      const tvUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}`;
 
       // Fetch the data from all the URLs
       const [trendingRes, popularRes, upcomingRes, tvRes] = await Promise.all([
         fetch(trendingUrl),
         fetch(popularUrl),
         fetch(upcomingUrl),
-        fetch(tvUrl),
       ]);
 
       // Get data from the responses
       const trendingData = await trendingRes.json();
       const popularData = await popularRes.json();
       const upcomingData = await upcomingRes.json();
-      const tvData = await tvRes.json();
 
       // Combine all data into one array
       const combinedMovies = [
         ...trendingData.results,
         ...popularData.results,
         ...upcomingData.results,
-        ...tvData.results,
       ];
 
       // Remove movie duplicates by id
@@ -46,28 +42,24 @@ function Discover() {
         new Map(combinedMovies.map((movie) => [movie.id, movie])).values()
       );
       // Set movies state
-      setMoviesTvShows(uniqueMovies);
+      setmovies(uniqueMovies);
       console.log(uniqueMovies);
     } catch (error) {
       console.error("Failed to fetch movies:", error);
-      setMoviesTvShows([]);
+      setmovies([]);
     }
   };
 
   useEffect(() => {
-    getMoviesTvShows();
+    getMovies();
   }, [API_KEY]);
 
   const handleChange = (e) => {
     setSearchMovie(e.target.value);
   };
 
-  const filteredMoviesTvShows = moviesTvShows.filter(
-    (movie) =>
-      (movie.title &&
-        movie.title.toLowerCase().includes(searchMovie.toLowerCase())) ||
-      (movie.name &&
-        movie.name.toLowerCase().includes(searchMovie.toLowerCase()))
+  const filteredMovies = movies.filter((movie) =>
+    movie.title?.toLowerCase().includes(searchMovie.toLowerCase())
   );
 
   return (
@@ -94,7 +86,7 @@ function Discover() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {filteredMoviesTvShows.map((movie) => {
+          {filteredMovies.map((movie) => {
             const posterUrl = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
             return (
               <Link
@@ -110,10 +102,8 @@ function Discover() {
                 <div className="flex flex-col justify-center items-center text-lg font-semibold mt-2 absolute bottom-0 right-0 text-center text-white bg-gray-900 w-full h-full opacity-0 hover:opacity-70 rounded-lg ">
                   <p>{movie.title || movie.name}</p>
                   <p>
-                    {(movie.release_date || movie.first_air_date) &&
-                      new Date(
-                        movie.release_date || movie.first_air_date
-                      ).getFullYear()}
+                    {movie.release_date &&
+                      new Date(movie.release_date).getFullYear()}
                   </p>
                 </div>
               </Link>
