@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import MovieCarousel from "@/components/MovieCarousel";
 import MovieCard from "@/components/MovieCard";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default function Home() {
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
@@ -46,6 +47,7 @@ export default function Home() {
       <MovieCard movies={trendingMovies} heading="Trending" />
       <MovieCard movies={topRatedMovies} heading="Top Rated" />
       <MovieCard movies={upcomingMovies} heading="Upcoming" />
+      <Footer />
     </div>
   );
 }
