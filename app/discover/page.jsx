@@ -54,10 +54,11 @@ function Discover() {
     getMovies();
   }, [API_KEY]);
 
+  // Handle search input
   const handleChange = (e) => {
     setSearchMovie(e.target.value);
   };
-
+  // Filter movies based on search input
   const filteredMovies = movies.filter((movie) =>
     movie.title?.toLowerCase().includes(searchMovie.toLowerCase())
   );
