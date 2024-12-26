@@ -19,7 +19,7 @@ function Discover() {
       const upcomingUrl = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`;
 
       // Fetch the data from all the URLs
-      const [trendingRes, popularRes, upcomingRes, tvRes] = await Promise.all([
+      const [trendingRes, popularRes, upcomingRes] = await Promise.all([
         fetch(trendingUrl),
         fetch(popularUrl),
         fetch(upcomingUrl),
